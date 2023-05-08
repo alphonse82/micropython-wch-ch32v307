@@ -54,4 +54,4 @@ const mp_obj_module_t mp_module_utime = {
     .globals = (mp_obj_dict_t *)&time_module_globals,
 };
 
-MP_REGISTER_MODULE(MP_QSTR_time, mp_module_utime, MICROPY_PY_MODTIME);
+MP_REGISTER_MODULE(MP_QSTR_time, mp_module_utime);

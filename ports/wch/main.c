@@ -1,3 +1,4 @@
+#include "py/builtin.h"
 #include "py/compile.h"
 #include "py/gc.h"
 #include "py/mperrno.h"
