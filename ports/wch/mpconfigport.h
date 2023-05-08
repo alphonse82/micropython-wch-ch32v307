@@ -19,7 +19,7 @@
 #define MICROPY_ALLOC_PATH_MAX            (256)
 #define MICROPY_ALLOC_PARSE_CHUNK_INIT    (16)
 
-#define MICROPY_MODULE_WEAK_LINKS                (1)
+#define MICROPY_MODULE_WEAK_LINKS               (1)
 
 #define MICROPY_PY_ASYNC_AWAIT                  (1)
 #define MICROPY_PY_BUILTINS_SET                 (1)
@@ -55,7 +55,3 @@ typedef long mp_off_t;
 
 #define MP_STATE_PORT MP_STATE_VM
 
-#define MICROPY_PORT_ROOT_POINTERS \
-    const char *readline_hist[8]; \
-    mp_obj_t pin_class_mapper; \
-    mp_obj_t pin_class_map_dict;

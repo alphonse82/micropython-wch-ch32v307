@@ -24,34 +24,39 @@
  * THE SOFTWARE.
  */
 
-#include <stdio.h>
-#include <string.h>
-
-#include "py/runtime.h"
-#include "py/smallint.h"
 #include "py/obj.h"
 #include "shared/timeutils/timeutils.h"
-#include "extmod/utime_mphal.h"
 
-STATIC const mp_rom_map_elem_t time_module_globals_table[] = {
-    { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_utime) },
+// Return the localtime as an 8-tuple.
+STATIC mp_obj_t mp_utime_localtime_get(void) {
+    // get current date and time
+    // note: need to call get time then get date to correctly access the registers
+    rtc_init_finalise();
+    RTC_DateTypeDef date;
+    RTC_TimeTypeDef time;
+    HAL_RTC_GetTime(&RTCHandle, &time, RTC_FORMAT_BIN);
+    HAL_RTC_GetDate(&RTCHandle, &date, RTC_FORMAT_BIN);
+    mp_obj_t tuple[8] = {
+        mp_obj_new_int(2000 + date.Year),
+        mp_obj_new_int(date.Month),
+        mp_obj_new_int(date.Date),
+        mp_obj_new_int(time.Hours),
+        mp_obj_new_int(time.Minutes),
+        mp_obj_new_int(time.Seconds),
+        mp_obj_new_int(date.WeekDay - 1),
+        mp_obj_new_int(timeutils_year_day(2000 + date.Year, date.Month, date.Date)),
+    };
+    return mp_obj_new_tuple(8, tuple);
+}
 
-    { MP_ROM_QSTR(MP_QSTR_sleep), MP_ROM_PTR(&mp_utime_sleep_obj) },
-    { MP_ROM_QSTR(MP_QSTR_sleep_ms), MP_ROM_PTR(&mp_utime_sleep_ms_obj) },
-    { MP_ROM_QSTR(MP_QSTR_sleep_us), MP_ROM_PTR(&mp_utime_sleep_us_obj) },
-    { MP_ROM_QSTR(MP_QSTR_ticks_ms), MP_ROM_PTR(&mp_utime_ticks_ms_obj) },
-    { MP_ROM_QSTR(MP_QSTR_ticks_us), MP_ROM_PTR(&mp_utime_ticks_us_obj) },
-    { MP_ROM_QSTR(MP_QSTR_ticks_cpu), MP_ROM_PTR(&mp_utime_ticks_cpu_obj) },
-    { MP_ROM_QSTR(MP_QSTR_ticks_add), MP_ROM_PTR(&mp_utime_ticks_add_obj) },
-    { MP_ROM_QSTR(MP_QSTR_ticks_diff), MP_ROM_PTR(&mp_utime_ticks_diff_obj) },
-    { MP_ROM_QSTR(MP_QSTR_time_ns), MP_ROM_PTR(&mp_utime_time_ns_obj) },
-};
-
-STATIC MP_DEFINE_CONST_DICT(time_module_globals, time_module_globals_table);
-
-const mp_obj_module_t mp_module_utime = {
-    .base = { &mp_type_module },
-    .globals = (mp_obj_dict_t *)&time_module_globals,
-};
-
-MP_REGISTER_MODULE(MP_QSTR_time, mp_module_utime);
+// Returns the number of seconds, as an integer, since 1/1/2000.
+STATIC mp_obj_t mp_utime_time_get(void) {
+    // get date and time
+    // note: need to call get time then get date to correctly access the registers
+    rtc_init_finalise();
+    RTC_DateTypeDef date;
+    RTC_TimeTypeDef time;
+    HAL_RTC_GetTime(&RTCHandle, &time, RTC_FORMAT_BIN);
+    HAL_RTC_GetDate(&RTCHandle, &date, RTC_FORMAT_BIN);
+    return mp_obj_new_int(timeutils_seconds_since_epoch(2000 + date.Year, date.Month, date.Date, time.Hours, time.Minutes, time.Seconds));
+}

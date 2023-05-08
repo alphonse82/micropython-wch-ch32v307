@@ -1,7 +1,10 @@
 MicroPython port for WCH-CH32V307
 ================================
 
-This is an experimental port of MicroPython for the [CH32V307EVT](https://eji4evk5kxx.exactdn.com/wp-content/uploads/2022/01/CH32V307V-EVT-R1-720x499.jpg) board, which uses the [WCH CH32V307](https://github.com/openwch/ch32v307) RISC-V microcontroller.
+This is an experimental port of MicroPython for the [CH32V307EVT](https://github.com/openwch/ch32v307/blob/main/EVT/PUB/CH32V30xEVT%20Evaluation%20Board%20Manual.pdf)
+board, which uses the [WCH CH32V307](https://github.com/openwch/ch32v307) RISC-V microcontroller.
+
+It also works with the YD-CH32V307VCT6 from VCCGND studio : http://vcc-gnd.com/
 
 Supported features include:
 - [x] REPL (Python prompt) over UART0(WCH-Link/P9).
