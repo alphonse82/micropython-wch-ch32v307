@@ -21,6 +21,7 @@ CROSS_COMPILE ?= $(TOOLCHAIN_ROOT)riscv-none-embed-
 
 # Project specific
 BOARD ?= CH32V307EVT
+#BOARD ?= YD-CH32V307VCT6
 TARGET = $(BOARD).elf
 
 SRC_DIR = bsp/src/
@@ -80,6 +81,8 @@ OBJ += $(addprefix $(BUILD)/, $(SRC_S:.S=.o))
 
 MAKE_PINS = boards/make-pins.py
 BOARD_PINS = boards/ch32v307_evt_pins.csv
+#BOARD_PINS  = boards/yd-ch32v307vct6.csv
+
 AF_FILE = boards/ch32v30x_af.csv
 PREFIX_FILE = boards/prefix.c
 

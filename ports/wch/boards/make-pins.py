@@ -2,7 +2,7 @@
 
 """
 Generates pin source files based on an MCU alternate-function definition (eg
-stm32f405_af.csv) and a board-specific pin definition file, pins.csv.
+ch32v30x_af.csv) and a board-specific pin definition file, pins.csv.
 
 The pins.csv file can contain empty lines, comments (a line beginning with "#")
 or pin definition lines.  Pin definition lines must be of the form:
