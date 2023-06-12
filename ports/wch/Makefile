@@ -44,7 +44,7 @@ SRC_C = \
 	shared/runtime/gchelper_generic.c \
 	shared/runtime/pyexec.c \
 	shared/runtime/stdout_helpers.c \
-	extmod/modutime.c
+        extmod/modtime.c
 
 SRC_C += $(wildcard $(SRC_DIR)*.c)
 
@@ -53,7 +53,7 @@ SRC_S += bsp/startup_ch32v30x_D8C.S
 SRC_C    += $(SRC_MOD)
 SRC_CXX  += $(SRC_MOD_CXX)
 SRC_QSTR += $(SRC_MOD) $(SRC_MOD_CXX)
-SRC_QSTR += pin.c pin_named_pins.c modmachine.c modutime.c
+SRC_QSTR += pin.c pin_named_pins.c modmachine.c modtime.c
 SRC_QSTR += shared/readline/readline.c shared/runtime/pyexec.c
 
 SRC_C    += $(BUILD)/pins_$(BOARD).c
